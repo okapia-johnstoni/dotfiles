@@ -74,6 +74,7 @@ NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tacahiroy/ctrlp-funky'
 NeoBundle 'suy/vim-ctrlp-commandline'
 NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'ElmCast/elm-vim'
 
 "----------------------------------------------------------
 call neobundle#end()
