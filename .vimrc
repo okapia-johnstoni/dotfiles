@@ -99,3 +99,4 @@ command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
 
 let g:ctrlp_funky_matchtype = 'path'
 
+map <C-n> :NERDTreeToggle<CR>
