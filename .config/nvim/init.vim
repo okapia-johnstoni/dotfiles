@@ -9,6 +9,14 @@ map <C-n> :NERDTreeToggle<CR>
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+set number
+
+set list
+
+set tabstop=4
+
+set expandtab
+
 Plug 'junegunn/fzf'
 
 Plug 'Shougo/denite.nvim'
