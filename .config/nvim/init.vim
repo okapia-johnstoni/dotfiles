@@ -17,7 +17,7 @@ set tabstop=4
 
 set expandtab
 
-et tags=tags;/,codex.tags;/
+set tags=tags;/,codex.tags;/
 
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
