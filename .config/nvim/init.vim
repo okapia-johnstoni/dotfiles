@@ -1,6 +1,7 @@
 let g:LanguageClient_serverCommands = {
 	\ 'haskell': ['hie', '--lsp'],
 	\ }
+
 let g:LanguageClient_autoStart = 1
 
 let g:deoplete#enable_at_startup = 1
@@ -20,6 +21,24 @@ set shiftwidth=4
 set expandtab
 
 set tags=tags;/,codex.tags;/
+
+set termguicolors
+
+set background=dark
+
+let mapleader = ","
+
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+nmap <leader>= :TagbarToggle<CR>
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+let g:tagbar_autofocus = 1
 
 let g:tagbar_type_haskell = {
     \ 'ctagsbin'  : 'hasktags',
@@ -55,15 +74,13 @@ let g:tagbar_type_haskell = {
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'junegunn/fzf'
-
 Plug 'Shougo/denite.nvim'
 
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
 Plug 'roxma/nvim-completion-manager'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'Shougo/echodoc.vim'
 
@@ -74,5 +91,7 @@ Plug 'dag/vim2hs'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'majutsushi/tagbar'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 call plug#end()
