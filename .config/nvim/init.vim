@@ -33,6 +33,8 @@ nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 nmap <leader>= :TagbarToggle<CR>
+nmap <leader>b :Buffers<CR>
+nmap <leader>/ :BLines<CR>
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -91,6 +93,8 @@ Plug 'dag/vim2hs'
 Plug 'scrooloose/nerdcommenter'
 
 Plug 'majutsushi/tagbar'
+
+Plug 'kassio/neoterm'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
