@@ -11,8 +11,8 @@ zplug "junegunn/fzf-bin", \
 
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
-zplug "mafredri/zsh-async"
-zplug "sindresorhus/pure"
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # Group dependencies
 # Load "emoji-cli" if "jq" is installed in this example
@@ -76,7 +76,31 @@ setopt share_history
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$HOME/.anyenv/bin:$HOME/.local/bin:$PATH"
 eval "$(anyenv init - zsh)"
-export PROMPT="%{$fg_bold[blue]%}${HOST} $PROMPT"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+autoload -U compinit
+compinit
+
+# cdr settings
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 1000
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
+
+export CLICOLOR=1
+export LSCOLORS=CxGxcxdxCxegedabagacad
 
 # cdr settings
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
