@@ -26,6 +26,10 @@ set termguicolors
 
 set background=dark
 
+set encoding=utf-8
+
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
+
 let mapleader = ","
 
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
