@@ -8,6 +8,9 @@ let g:deoplete#enable_at_startup = 1
 
 let g:indent_guides_enable_on_vim_startup = 1
 
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:previm_open_cmd = 'open'
+
 map <C-n> :NERDTreeToggle<CR>
 
 set number
@@ -105,5 +108,9 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
+
+Plug 'plasticboy/vim-markdown'
+Plug 'kannokanno/previm'
+Plug 'tyru/open-browser.vim'
 
 call plug#end()
