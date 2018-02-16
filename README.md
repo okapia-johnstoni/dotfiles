@@ -6,6 +6,7 @@
 |direnv | https://github.com/direnv/direnv | directory specific environment variable configuration |
 |neovim | https://neovim.io/ | right weight vi editor|
 |python3| https://www.python.org/ | python! |
+|zsh| |zsh|
 
 ## Installation with Brew (Linux Brew)
 
@@ -44,6 +45,17 @@
 - haskell related plugin libraries
   ```
   $ pip3 install neovim
+  ```
+
+- [vim-plug](https://github.com/junegunn/vim-plug)
+  ```
+  $ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  ```
+
+- zsh, [zplug](https://github.com/zplug/zplug)
+  ```
+  $ brew install zsh zplug
   ```
 
 ## Haskell
