@@ -1,4 +1,6 @@
 export ZPLUG_HOME=/usr/local/opt/zplug
+# in the case of using linuxbrew
+#export ZPLUG_HOME=$HOME/.linuxbrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 # Grab binaries from GitHub Releases
