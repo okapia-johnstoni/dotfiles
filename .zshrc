@@ -116,3 +116,14 @@ fi
 
 export CLICOLOR=1
 export LSCOLORS=CxGxcxdxCxegedabagacad
+
+# delete word units
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+function _kill-backward-blank-word() {
+  zle set-mark-command
+  zle vi-backward-blank-word
+  zle kill-region
+}
+zle -N _kill-backward-blank-word
+bindkey '^Y' _kill-backward-blank-word
