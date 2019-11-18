@@ -17,9 +17,9 @@ set number
 
 set list
 
-set tabstop=4
+set tabstop=2
 
-set shiftwidth=4
+set shiftwidth=2
 
 set expandtab
 
@@ -35,9 +35,25 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
 let mapleader = ","
 
+fun! JumpToDef()
+  if exists("*GotoDefinition_" . &filetype)
+    call GotoDefinition_{&filetype}()
+  else
+    exe "norm! \<C-]>"
+  endif
+endf
+
+" Jump to tag
+nn <M-g> :call JumpToDef()<cr>
+ino <M-g> <esc>:call JumpToDef()<cr>i
+
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+nnoremap <C-t>o :tabe %<CR>
+nnoremap <C-t>p :tabp<CR>
+nnoremap <C-t>b :tabn<CR>
 
 nmap <leader>= :TagbarToggle<CR>
 nmap <leader>b :Buffers<CR>
@@ -81,6 +97,12 @@ let g:tagbar_type_haskell = {
     \ }
     \ }
 
+au User asyncomplete_setup call asyncomplete#register_source({
+    \ 'name': 'nim',
+    \ 'whitelist': ['nim'],
+    \ 'completor': {opt, ctx -> nim#suggest#sug#GetAllCandidates({start, candidates -> asyncomplete#complete(opt['name'], ctx, start, candidates)})}
+    \ })
+
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'Shougo/denite.nvim'
@@ -104,13 +126,37 @@ Plug 'majutsushi/tagbar'
 Plug 'kassio/neoterm'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
 Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-gitgutter'
+
 Plug 'vim-airline/vim-airline'
 
 Plug 'plasticboy/vim-markdown'
+
 Plug 'kannokanno/previm'
+
 Plug 'tyru/open-browser.vim'
+
+Plug 'alaviss/nim.nvim'
+
+Plug 'osyo-manga/vim-watchdogs'
+
+Plug 'w0rp/ale'
+
+Plug 'prabirshrestha/async.vim'
+
+Plug 'prabirshrestha/asyncomplete.vim'
+
+Plug 'prabirshrestha/vim-lsp'
+
+Plug 'fatih/vim-go'
+
+Plug 'JuliaEditorSupport/julia-vim'
+
+Plug 'leafgarland/typescript-vim'
+
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
