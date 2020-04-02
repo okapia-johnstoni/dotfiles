@@ -6,6 +6,7 @@
 |direnv | https://github.com/direnv/direnv | directory specific environment variable configuration |
 |neovim | https://neovim.io/ | right weight vi editor|
 |python3| https://www.python.org/ | python! |
+|nixpkgs| https://nixos.org/nix/ | Nix package manager |
 |zsh| |zsh|
 
 ## Installation with Brew (Linux Brew)
@@ -41,8 +42,12 @@
   ```
   $ brew install direnv neovim
   ```
+  or
+  ```
+  $ nix-env -i direnv neovim
+  ```
 
-- haskell related plugin libraries
+- to use various plug-ins in neovim we need following python library. 
   ```
   $ pip3 install neovim
   ```
@@ -57,6 +62,12 @@
   ```
   $ brew install zsh zplug
   ```
+
+## Go
+- install by nix
+```
+$ nix-env -i go
+```
 
 ## Haskell
 - [Haskell IDE Engine](https://github.com/haskell/haskell-ide-engine)

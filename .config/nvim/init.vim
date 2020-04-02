@@ -1,5 +1,6 @@
 let g:LanguageClient_serverCommands = {
 	\ 'haskell': ['hie', '--lsp'],
+  \ 'go': ['gopls'],
 	\ }
 
 let g:LanguageClient_autoStart = 1
@@ -65,38 +66,6 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 let g:tagbar_autofocus = 1
 
-let g:tagbar_type_haskell = {
-    \ 'ctagsbin'  : 'hasktags',
-    \ 'ctagsargs' : '-x -c -o-',
-    \ 'kinds'     : [
-        \  'm:modules:0:1',
-        \  'd:data: 0:1',
-        \  'd_gadt: data gadt:0:1',
-        \  't:type names:0:1',
-        \  'nt:new types:0:1',
-        \  'c:classes:0:1',
-        \  'cons:constructors:1:1',
-        \  'c_gadt:constructor gadt:1:1',
-        \  'c_a:constructor accessors:1:1',
-        \  'ft:function types:1:1',
-        \  'fi:function implementations:0:1',
-        \  'o:others:0:1'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'm' : 'module',
-        \ 'c' : 'class',
-        \ 'd' : 'data',
-        \ 't' : 'type'
-    \ },
-    \ 'scope2kind' : {
-        \ 'module' : 'm',
-        \ 'class'  : 'c',
-        \ 'data'   : 'd',
-        \ 'type'   : 't'
-    \ }
-    \ }
-
 au User asyncomplete_setup call asyncomplete#register_source({
     \ 'name': 'nim',
     \ 'whitelist': ['nim'],
@@ -109,15 +78,15 @@ Plug 'Shougo/denite.nvim'
 
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
-Plug 'roxma/nvim-completion-manager'
-
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
 
 Plug 'Shougo/echodoc.vim'
 
 Plug 'scrooloose/nerdtree'
 
-Plug 'dag/vim2hs'
+" Plug 'dag/vim2hs'
 
 Plug 'scrooloose/nerdcommenter'
 
@@ -149,13 +118,13 @@ Plug 'prabirshrestha/async.vim'
 
 Plug 'prabirshrestha/asyncomplete.vim'
 
-Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/vim-lsp'
 
 Plug 'fatih/vim-go'
 
 Plug 'JuliaEditorSupport/julia-vim'
 
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 
 Plug 'nathanaelkane/vim-indent-guides'
 
