@@ -119,7 +119,6 @@ export LSCOLORS=CxGxcxdxCxegedabagacad
 
 # delete word units
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
 function _kill-backward-blank-word() {
   zle set-mark-command
   zle vi-backward-blank-word
@@ -127,3 +126,12 @@ function _kill-backward-blank-word() {
 }
 zle -N _kill-backward-blank-word
 bindkey '^Y' _kill-backward-blank-word
+
+# history search with fzf
+function select-history() {
+  BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+  CURSOR=$#BUFFER
+}
+zle -N select-history
+bindkey '^r' select-history
+
