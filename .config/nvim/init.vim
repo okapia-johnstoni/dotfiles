@@ -1,16 +1,12 @@
-let g:LanguageClient_serverCommands = {
-	\ 'haskell': ['hie', '--lsp'],
-  \ 'go': ['gopls'],
-	\ }
-
-let g:LanguageClient_autoStart = 1
-
-let g:deoplete#enable_at_startup = 1
-
 let g:indent_guides_enable_on_vim_startup = 1
 
 au BufRead,BufNewFile *.md set filetype=markdown
 let g:previm_open_cmd = 'open'
+
+nnoremap <C-y> :call LanguageClient_contextMenu()<CR>
+let g:LanguageClient_serverCommands = {
+      \ 'nim': ['~/.nimble/bin/nimlsp'],
+      \ }
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -36,6 +32,9 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
 let mapleader = ","
 
+" remove trailing spaces on saving file
+autocmd BufWritePre * :%s/\s\+$//e
+
 fun! JumpToDef()
   if exists("*GotoDefinition_" . &filetype)
     call GotoDefinition_{&filetype}()
@@ -52,6 +51,7 @@ nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
+" control tabs
 nnoremap <C-t>o :tabe %<CR>
 nnoremap <C-t>p :tabp<CR>
 nnoremap <C-t>b :tabn<CR>
@@ -59,12 +59,11 @@ nnoremap <C-t>b :tabn<CR>
 nmap <leader>= :TagbarToggle<CR>
 nmap <leader>b :Buffers<CR>
 nmap <leader>/ :BLines<CR>
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+tnoremap <silent> <ESC> <C-\><C-n>
 
 let g:tagbar_autofocus = 1
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 au User asyncomplete_setup call asyncomplete#register_source({
     \ 'name': 'nim',
@@ -74,19 +73,15 @@ au User asyncomplete_setup call asyncomplete#register_source({
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'prabirshrestha/asyncomplete.vim'
+
 Plug 'Shougo/denite.nvim'
 
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'Shougo/echodoc.vim'
 
 Plug 'scrooloose/nerdtree'
-
-" Plug 'dag/vim2hs'
 
 Plug 'scrooloose/nerdcommenter'
 
@@ -102,6 +97,8 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'vim-airline/vim-airline'
 
+Plug 'godlygeek/tabular'
+
 Plug 'plasticboy/vim-markdown'
 
 Plug 'kannokanno/previm'
@@ -112,20 +109,23 @@ Plug 'alaviss/nim.nvim'
 
 Plug 'osyo-manga/vim-watchdogs'
 
-Plug 'w0rp/ale'
+Plug 'fatih/vim-go' " for golang
 
-Plug 'prabirshrestha/async.vim'
-
-Plug 'prabirshrestha/asyncomplete.vim'
-
-" Plug 'prabirshrestha/vim-lsp'
-
-Plug 'fatih/vim-go'
-
-Plug 'JuliaEditorSupport/julia-vim'
+Plug 'JuliaEditorSupport/julia-vim' " for julia
 
 " Plug 'leafgarland/typescript-vim'
 
 Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'sebdah/vim-delve'
+
+Plug 'tomasr/molokai'
+
+Plug 'fmoralesc/molokayo'
+
+Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 
 call plug#end()
