@@ -7,7 +7,7 @@
 |neovim | https://neovim.io/ | light weight vi editor|
 |python3| https://www.python.org/ | python! |
 |nixpkgs| https://nixos.org/nix/ | Nix package manager |
-|starship| https://starship.rs/| | shell prompt |
+|starship| https://starship.rs/ | shell prompt |
 |zsh| |zsh|
 
 ## Installation with Brew (Linux Brew)
@@ -64,13 +64,20 @@ On using nixpkgs, brew may not necessary in most cases.
   ```
   $ curl -fsSL https://starship.rs/install.sh | bash
   ```
+  or
+  ```
+  $ nix-env -i starship
+  ```
 
 - zsh, [zplug](https://github.com/zplug/zplug)
   zsh is default shell on latest MacOS. You may not need to install zsh in brew.
   ```
   $ brew install zplug
   ```
-
+- zsh-completions
+  ```
+  - nix-env -i zsh-completions
+  ```
 ## Go
 - install by nix
 ```
@@ -88,6 +95,13 @@ goenv install ${go version}
   ```
   curl -sSL https://get.haskellstack.org/ | sh
   ```
+# Other useful packages
+
+| name | url | description |
+|:-----|-----|--------|
+| xsv | https://github.com/BurntSushi/xsv | CSV parser |
+| ranger | https://github.com/ranger/ranger | file manager with terminal UI |
+| lazydocker | https://github.com/jesseduffield/lazydocker | docker utility in terminal |
 
 # Install zsh functions if required
 Put custom zsh functions under `$HOME/.config/zsh/funcs` .
