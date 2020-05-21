@@ -1,0 +1,7 @@
+# AWS vpc selector
+function avpc() {
+  vpcs=$(aws ec2 describe-vpcs --query "Vpcs[*].[Tags[?Key=='Name'].Value | [0], VpcId, State, CidrBlock]" --output text)
+  echo "$vpc"
+}
+
+avpc "$@"

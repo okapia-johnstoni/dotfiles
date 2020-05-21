@@ -4,14 +4,16 @@
 |:-----|-----|--------|
 |anyenv | https://github.com/riywo/anyenv | local environment customization |
 |direnv | https://github.com/direnv/direnv | directory specific environment variable configuration |
-|neovim | https://neovim.io/ | right weight vi editor|
+|neovim | https://neovim.io/ | light weight vi editor|
 |python3| https://www.python.org/ | python! |
 |nixpkgs| https://nixos.org/nix/ | Nix package manager |
+|starship| https://starship.rs/| | shell prompt |
 |zsh| |zsh|
 
 ## Installation with Brew (Linux Brew)
 
 ### Brew installation
+On using nixpkgs, brew may not necessary in most cases.
 - Mac [Homebew](https://docs.brew.sh/Installation.html)
   ```
   $ mkdir homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
@@ -47,7 +49,7 @@
   $ nix-env -i direnv neovim
   ```
 
-- to use various plug-ins in neovim we need following python library. 
+- to use various plug-ins in neovim we need following python library.
   ```
   $ pip3 install neovim
   ```
@@ -58,15 +60,25 @@
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   ```
 
-- zsh, [zplug](https://github.com/zplug/zplug)
+- [starship](https://starship.rs/)
   ```
-  $ brew install zsh zplug
+  $ curl -fsSL https://starship.rs/install.sh | bash
+  ```
+
+- zsh, [zplug](https://github.com/zplug/zplug)
+  zsh is default shell on latest MacOS. You may not need to install zsh in brew.
+  ```
+  $ brew install zplug
   ```
 
 ## Go
 - install by nix
 ```
 $ nix-env -i go
+```
+- install using goenv
+```
+goenv install ${go version}
 ```
 
 ## Haskell
@@ -76,3 +88,15 @@ $ nix-env -i go
   ```
   curl -sSL https://get.haskellstack.org/ | sh
   ```
+
+# Install zsh functions if required
+Put custom zsh functions under `$HOME/.config/zsh/funcs` .
+- GCP
+  - gconf
+    gcloud configuration selector. you can change GCP project configuration with fzf.
+  - gssh
+    GCP vm ssh using fzf.
+- AWS
+  - ainst: show instance information
+  - avpc: show vpc information
+  - asubnet: show subnet information

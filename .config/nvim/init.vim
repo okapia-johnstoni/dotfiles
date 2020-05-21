@@ -95,6 +95,10 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'airblade/vim-gitgutter'
 
+Plug 'tpope/vim-fugitive'
+
+Plug 'junegunn/gv.vim'
+
 Plug 'vim-airline/vim-airline'
 
 Plug 'godlygeek/tabular'

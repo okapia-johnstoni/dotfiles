@@ -1,0 +1,7 @@
+# AWS subnet selector
+function asubnet() {
+  subnets=$(aws ec2 describe-subnets --query "Subnets[*].[Tags[?Key=='Name'].Value | [0], VpcId, SubnetId, CidrBlock, AvailabilityZone, MapPublicIpOnLaunch]" --output text)
+  echo "$subnets"
+}
+
+asubnet "$@"

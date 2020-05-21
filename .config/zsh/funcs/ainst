@@ -1,0 +1,10 @@
+# AWS instance selector
+function ainst() {
+  instances=$(aws ec2 describe-instances \
+    --query "Reservations[*].Instances[*].[Tags[?Key=='Name'].Value | \
+    [0], InstanceId, State.Name, PublicIpAddress, PrivateIpAddress, PrivateDnsName, LaunchTime, PublicDnsName]" \
+    --output text)
+  echo "$instances"
+}
+
+ainst "$@"

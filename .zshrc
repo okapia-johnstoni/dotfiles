@@ -14,7 +14,7 @@ zplug "junegunn/fzf-bin", \
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 # theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
 zplug "mafredri/zsh-async", from:github
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
 
 # Group dependencies
 # Load "emoji-cli" if "jq" is installed in this example
@@ -76,8 +76,10 @@ setopt hist_ignore_all_dups
 # 同時に起動したzshの間でヒストリを共有
 setopt share_history
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/.anyenv/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init - zsh)"
+eval "$(pyenv virtualenv-init -)"
+
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -90,9 +92,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-autoload -U compinit
-compinit
 
 # cdr settings
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -114,6 +113,24 @@ else
     echo "no ssh-agent"
 fi
 
+# Git
+_fzf_complete_git() {
+    ARGS="$@"
+    local branches
+    branches=$(git branch -vv --all)
+    if [[ $ARGS == 'git co'* ]]; then
+        _fzf_complete --reverse --multi -- "$@" < <(
+            echo $branches
+        )
+    else
+        eval "zle ${fzf_default_completion:-expand-or-complete}"
+    fi
+}
+
+_fzf_complete_git_post() {
+    awk '{print $1}'
+}
+
 export CLICOLOR=1
 export LSCOLORS=CxGxcxdxCxegedabagacad
 
@@ -134,4 +151,58 @@ function select-history() {
 }
 zle -N select-history
 bindkey '^r' select-history
+
+. /Users/okazaki/.nix-profile/etc/profile.d/nix.sh
+
+# direnv was installed by nix-env
+eval "$(direnv hook zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/okazaki/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/okazaki/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/okazaki/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/okazaki/google-cloud-sdk/completion.zsh.inc'; fi
+
+# zsh-completions(補完機能)の設定
+if [ -e /nix/store/njs796j21wfwfqnwhp4kmcslgka8biph-zsh-completions-0.31.0/share/zsh/site-functions ]; then
+    fpath=( /nix/store/njs796j21wfwfqnwhp4kmcslgka8biph-zsh-completions-0.31.0/share/zsh/site-functions $fpath)
+fi
+
+if [ -e ~/.config/zsh/completions ]; then
+  fpath=( ~/.config/zsh/completions "${fpath[@]}" )
+fi
+
+autoload -U compinit
+compinit -u
+
+# load functions under funcs directory
+if [ -e ~/.config/zsh/funcs ]; then
+  for f in ~/.config/zsh/funcs/*(.)
+  do
+    autoload -Uz "$f"
+  done
+fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# to use docker completion, following repository should be cloned
+# $ git clone https://github.com/kwhrtsk/docker-fzf-completion
+test -e "$HOME/.config/zsh/docker-fzf-completion" && source "$HOME/.config/zsh/docker-fzf-completion/docker-fzf.zsh"
+
+# path to protoc
+export PATH="$HOME/.local/share/protoc/bin:$PATH"
+
+# for nim
+export PATH=/Users/okazaki/.nimble/bin:$PATH
+
+# GCP
+export GOOGLE_APPLICATION_CREDENTIALS=$HOME/.gcp/magellan-blocks-blocks-gn-okazaki-3f71993b0749.json
+export PROJECT_ID=blocks-gn-okazaki
+
+# AWS
+export PATH="$HOME/.aws/bin:$PATH"
+complete -C '$HOME/.aws/bin/aws_completer' aws
+
+# starship (https://starship.rs/)
+eval "$(starship init zsh)"
 
