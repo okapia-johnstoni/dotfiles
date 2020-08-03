@@ -1,50 +1,43 @@
-export ZPLUG_HOME=/usr/local/opt/zplug
-# in the case of using linuxbrew
-#export ZPLUG_HOME=$HOME/.linuxbrew/opt/zplug
-source $ZPLUG_HOME/init.zsh
-
-# Grab binaries from GitHub Releases
-# and rename with the "rename-to:" tag
-zplug "junegunn/fzf-bin", \
-    from:gh-r, \
-    as:command, \
-    rename-to:fzf, \
-    use:"*darwin*amd64*"
-
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-# theme (https://github.com/sindresorhus/pure#zplug)　好みのスキーマをいれてくだされ。
-zplug "mafredri/zsh-async", from:github
-#zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
-
-# Group dependencies
-# Load "emoji-cli" if "jq" is installed in this example
-zplug "stedolan/jq", \
-    from:gh-r, \
-    as:command, \
-    rename-to:jq
-zplug "b4b4r07/emoji-cli", \
-    on:"stedolan/jq"
-
-# 構文のハイライト(https://github.com/zsh-users/zsh-syntax-highlighting)
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-# history関係
-zplug "zsh-users/zsh-history-substring-search"
-
-# タイプ補完
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  fi
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-# Then, source plugins and add commands to $PATH
-zplug "mollifier/anyframe"
 
-zplug load
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+zinit load "mafredri/zsh-async"
+
+zinit load "zsh-users/zsh-autosuggestions"
+
+zinit load "zsh-users/zsh-completions"
+
+zinit load "zdharma/fast-syntax-highlighting"
+
+zinit light "zdharma/history-search-multi-word"
+
+zinit light "mollifier/anyframe"
+
+zinit light "gimbo/iterm2-tabs.zsh"
+#zinit light "supercrabtree/k"
+
+zinit ice from"gh-r" as"program"
+zinit load "junegunn/fzf-bin"
 
 bindkey '^xb' anyframe-widget-cdr
 bindkey '^x^b' anyframe-widget-checkout-git-branch
@@ -61,7 +54,6 @@ bindkey '^x^g' anyframe-widget-cd-ghq-repository
 bindkey '^xk' anyframe-widget-kill
 bindkey '^x^k' anyframe-widget-kill
 
-bindkey '^xe' emoji::cli
 #bindkey '^xe' anyframe-widget-insert-git-branch
 #bindkey '^x^e' anyframe-widget-insert-git-branch
 
@@ -79,7 +71,6 @@ setopt share_history
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init - zsh)"
 eval "$(pyenv virtualenv-init -)"
-
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -172,6 +163,8 @@ if [ -e ~/.config/zsh/completions ]; then
   fpath=( ~/.config/zsh/completions "${fpath[@]}" )
 fi
 
+alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+
 autoload -U compinit
 compinit -u
 
@@ -205,4 +198,6 @@ complete -C '$HOME/.aws/bin/aws_completer' aws
 
 # starship (https://starship.rs/)
 eval "$(starship init zsh)"
+
+export PATH="$PATH:/usr/local/opt/qt@5.5/bin"
 

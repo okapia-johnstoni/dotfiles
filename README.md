@@ -69,10 +69,10 @@ On using nixpkgs, brew may not necessary in most cases.
   $ nix-env -i starship
   ```
 
-- zsh, [zplug](https://github.com/zplug/zplug)
-  zsh is default shell on latest MacOS. You may not need to install zsh in brew.
+- zsh, [zinit](https://github.com/zdharma/zinit)
+  zsh is the default shell on latest MacOS. You may not need to install zsh with brew. Installing zinit follows:
   ```
-  $ brew install zplug
+  $ sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
   ```
 - zsh-completions
   ```
