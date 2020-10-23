@@ -2,7 +2,8 @@
 
 | name | url | description |
 |:-----|-----|--------|
-|anyenv | https://github.com/riywo/anyenv | local environment customization |
+|~~anyenv~~ | https://github.com/riywo/anyenv | local environment customization (**replaced by asdf**) |
+|asdf|https://asdf-vm.com/#/| various runtime version management tool |
 |direnv | https://github.com/direnv/direnv | directory specific environment variable configuration |
 |neovim | https://neovim.io/ | light weight vi editor|
 |python3| https://www.python.org/ | python! |
@@ -32,19 +33,25 @@ On using nixpkgs, brew may not necessary in most cases.
   ```
 
 ### Install required software
-- anyenv
+- [asdf](https://asdf-vm.com/)
+
+  Check the homepage and should use the latest version instead.
   ```
-  $ git clone https://github.com/riywo/anyenv ~/.anyenv
-  $ echo 'export PATH="$HOME/.anyenv/bin:$PATH"' >> ~/.your_profile
-  $ echo 'eval "$(anyenv init -)"' >> ~/.your_profile
+  $ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
+  $ echo '. $HOME/.asdf/asdf.sh' >> ~/.your_profile
   $ exec $SHELL -l
   ```
+  - python3
+
+    This is necessary to prceed following libraries' installation.
+    ```
+    $ asdf plugin add python
+    $ asdf install python 3.9.0
+    $ asdf global python 3.9.0
+    $ touch $HOME/.default-python-packages
+    ```
 
 - direnv, neovim
-  ```
-  $ brew install direnv neovim
-  ```
-  or
   ```
   $ nix-env -i direnv neovim
   ```
@@ -83,9 +90,27 @@ On using nixpkgs, brew may not necessary in most cases.
 ```
 $ nix-env -i go
 ```
-- install using goenv
+- install using asdf golang plugin
 ```
-goenv install ${go version}
+asdf plugin add golang
+asdf install golang ${go version}
+asdf [local|global] golang ${go version}
+```
+
+## Ruby
+- install using asdf ruby plugin
+```
+asdf plugin add ruby
+asdf install ruby ${ruby version}
+asdf [local|global] ruby ${ruby version}
+```
+
+## Node.js
+- install using asdf nodejs plugin
+```
+asdf plugin add nodejs
+asdf install nodejs ${nodejs version}
+asdf [local|global] nodejs ${nodejs version}
 ```
 
 ## Haskell
