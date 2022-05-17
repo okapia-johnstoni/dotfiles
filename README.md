@@ -10,6 +10,9 @@
 |nixpkgs| https://nixos.org/nix/ | Nix package manager |
 |starship| https://starship.rs/ | shell prompt |
 |zsh| |zsh|
+|tmux| https://github.com/tmux/tmux/wiki | tmux |
+|tpm| https://github.com/tmux-plugins/tpm | tmux package manager |
+|tig| https://github.com/jonas/tig | text mode interface for git |
 
 ## Installation with Brew (Linux Brew)
 
@@ -127,6 +130,7 @@ asdf [local|global] nodejs ${nodejs version}
 | xsv | https://github.com/BurntSushi/xsv | CSV parser |
 | ranger | https://github.com/ranger/ranger | file manager with terminal UI |
 | lazydocker | https://github.com/jesseduffield/lazydocker | docker utility in terminal |
+| silver-searcher | https://github.com/ggreer/the_silver_searcher | fast search tool |
 
 # Install zsh functions if required
 Put custom zsh functions under `$HOME/.config/zsh/funcs` .

@@ -34,7 +34,6 @@ zinit light "zdharma/history-search-multi-word"
 zinit light "mollifier/anyframe"
 
 zinit light "gimbo/iterm2-tabs.zsh"
-#zinit light "supercrabtree/k"
 
 zinit ice from"gh-r" as"program"
 zinit load "junegunn/fzf-bin"
@@ -61,16 +60,20 @@ bindkey '^x^k' anyframe-widget-kill
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+setopt EXTENDED_HISTORY
+
+setopt HIST_EXPIRE_DUPS_FIRST
 # 直前のコマンドの重複を削除
-setopt hist_ignore_dups
+setopt HIST_IGNORE_DUPS
 # 同じコマンドをヒストリに残さない
-setopt hist_ignore_all_dups
+setopt HIST_IGNORE_ALL_DUPS
 # 同時に起動したzshの間でヒストリを共有
-setopt share_history
+setopt SHARE_HISTORY
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init - zsh)"
-eval "$(pyenv virtualenv-init -)"
+#export PATH="$HOME/.anyenv/bin:$PATH"
+#eval "$(anyenv init - zsh)"
+#eval "$(pyenv virtualenv-init -)"
+#
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -83,6 +86,11 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+# edit command line with $editor
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^x^e" edit-command-line
 
 # cdr settings
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -104,6 +112,8 @@ else
     echo "no ssh-agent"
 fi
 
+bindkey -e
+
 # Git
 _fzf_complete_git() {
     ARGS="$@"
@@ -123,7 +133,10 @@ _fzf_complete_git_post() {
 }
 
 export CLICOLOR=1
-export LSCOLORS=CxGxcxdxCxegedabagacad
+#export LSCOLORS=CxGxcxdxCxegedabagacad
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
+export EDITOR=nvim
 
 # delete word units
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
@@ -143,7 +156,8 @@ function select-history() {
 zle -N select-history
 bindkey '^r' select-history
 
-. /Users/okazaki/.nix-profile/etc/profile.d/nix.sh
+# This is necessary to configure folloing settings.
+export PATH="$HOME/.nix-profile/bin:$PATH"
 
 # direnv was installed by nix-env
 eval "$(direnv hook zsh)"
@@ -155,18 +169,23 @@ if [ -f '/Users/okazaki/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/okazaki
 if [ -f '/Users/okazaki/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/okazaki/google-cloud-sdk/completion.zsh.inc'; fi
 
 # zsh-completions(補完機能)の設定
-if [ -e /nix/store/njs796j21wfwfqnwhp4kmcslgka8biph-zsh-completions-0.31.0/share/zsh/site-functions ]; then
-    fpath=( /nix/store/njs796j21wfwfqnwhp4kmcslgka8biph-zsh-completions-0.31.0/share/zsh/site-functions $fpath)
+if [ -e /nix/store/472q9jrpbsjxn4d6i1splk7b9218ia9z-zsh-completions-0.33.0/share/zsh/site-functions ]; then
+    fpath=( /nix/store/472q9jrpbsjxn4d6i1splk7b9218ia9z-zsh-completions-0.33.0/share/zsh/site-functions $fpath)
 fi
 
 if [ -e ~/.config/zsh/completions ]; then
   fpath=( ~/.config/zsh/completions "${fpath[@]}" )
 fi
 
-alias ranger='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ll='ls -alFrt'
+alias la='ls -A'
+alias l='ls -CF'
+alias c='clear'
+alias nims='nim --hints:off'
 
-autoload -U compinit
-compinit -u
+autoload -U compinit && compinit
 
 # load functions under funcs directory
 if [ -e ~/.config/zsh/funcs ]; then
@@ -194,10 +213,19 @@ export PROJECT_ID=blocks-gn-okazaki
 
 # AWS
 export PATH="$HOME/.aws/bin:$PATH"
+
 complete -C '$HOME/.aws/bin/aws_completer' aws
+
+# asdf
+. $HOME/.asdf/asdf.sh
+
+# docker
+export DOCKER_HOST=tcp://192.168.64.3:2376
 
 # starship (https://starship.rs/)
 eval "$(starship init zsh)"
 
-export PATH="$PATH:/usr/local/opt/qt@5.5/bin"
+# zoxide https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init zsh)"
 
+export PATH="$PATH:/usr/local/opt/qt@5.5/bin"
