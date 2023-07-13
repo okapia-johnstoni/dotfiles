@@ -143,15 +143,18 @@ autocmd FileType ruby map <C-c> :w<CR>:!ruby -c %<CR>
 
 let g:ale_linters = {
 \   'nim': ['nimlsp', 'nimcheck'],
-\   'python': ['flake8', 'mypy'],
+\   'python': ['flake8', 'mypy', 'black'],
 \   'rust': ['clippy'],
 \   'ruby': ['rubocop'],
 \}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'nim': ['nimpretty'],
-\   'python': ['isort'],
+\   'rust': ['rustfmt'],
+\   'python': ['isort', 'black'],
+\   'ruby': ['rubocop'],
 \}
+let g:ale_ruby_rubocop_options = '-a'
 let g:ale_linters_explicit = 1
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1

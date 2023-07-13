@@ -2,7 +2,7 @@
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
@@ -14,10 +14,10 @@ autoload -Uz _zinit
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
+    zdharma-continuum/z-a-rust \
+    zdharma-continuum/z-a-as-monitor \
+    zdharma-continuum/z-a-patch-dl \
+    zdharma-continuum/z-a-bin-gem-node
 
 ### End of Zinit's installer chunk
 
@@ -33,7 +33,7 @@ zinit light "zdharma/history-search-multi-word"
 
 zinit light "mollifier/anyframe"
 
-zinit light "gimbo/iterm2-tabs.zsh"
+#zinit light "gimbo/iterm2-tabs.zsh"
 
 zinit ice from"gh-r" as"program"
 zinit load "junegunn/fzf-bin"
@@ -86,6 +86,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+alias ls='lsd'
 
 # edit command line with $editor
 autoload -z edit-command-line
@@ -185,8 +187,6 @@ alias l='ls -CF'
 alias c='clear'
 alias nims='nim --hints:off'
 
-autoload -U compinit && compinit
-
 # load functions under funcs directory
 if [ -e ~/.config/zsh/funcs ]; then
   for f in ~/.config/zsh/funcs/*(.)
@@ -220,7 +220,7 @@ complete -C '$HOME/.aws/bin/aws_completer' aws
 . $HOME/.asdf/asdf.sh
 
 # docker
-export DOCKER_HOST=tcp://192.168.64.3:2376
+PATH="$PATH:/Users/okazaki/Library/Application Support/multipass/bin"
 
 # starship (https://starship.rs/)
 eval "$(starship init zsh)"
@@ -229,3 +229,13 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 export PATH="$PATH:/usr/local/opt/qt@5.5/bin"
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
