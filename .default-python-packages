@@ -1,5 +1,7 @@
 neovim
-jedi-language-server
 mypy
 setuptools
 black
+isort
+pyproject-flake8
+ruff
